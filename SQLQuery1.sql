@@ -1,6 +1,13 @@
 CREATE DATABASE ElectronicsMarket
 
+GO
+
 USE ElectronicsMarket
+
+CREATE TABLE Brands(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	Name NVARCHAR(255) NOT NULL
+)
 
 CREATE TABLE Laptops(
 	Id INT PRIMARY KEY IDENTITY(10,1),
@@ -16,10 +23,6 @@ CREATE TABLE Phones(
 	BrandID INT FOREIGN KEY REFERENCES Brands(Id) NOT NULL
 )
 
-CREATE TABLE Brands(
-	Id INT PRIMARY KEY IDENTITY(1,1),
-	Name NVARCHAR(255) NOT NULL
-)
 
 INSERT INTO Brands
 VALUES('SAMSUNG'),
@@ -70,19 +73,26 @@ JOIN Phones P ON B.Id = P.BrandID
 --5
 SELECT 
 	B.Name AS BrandName,
+	P.Name AS PhoneName 
+FROM Brands B
+JOIN Phones P ON B.Id = P.BrandID
+
+--6
+SELECT 
+	B.Name AS BrandName,
 	L.Name AS LaptopName 
 FROM Brands B
 JOIN Laptops L ON B.Id = L.BrandID
 
---6
+--7
 SELECT * FROM Laptops
 WHERE Laptops.Price >= 2000 AND Laptops.Price < 5000 OR Laptops.Price > 5000
 
---7
+--8
 SELECT * FROM Phones
 WHERE Phones.Price >= 1000 AND Phones.Price < 1500 OR Phones.Price > 1500
 
---8
+--9
 SELECT
     B.Name AS BrandName,
     COUNT(L.Id) AS NumberOfLaptops
@@ -91,7 +101,7 @@ FROM
 JOIN Laptops L ON B.Id = L.BrandID
 GROUP BY B.Name;
 
---9
+--10
 SELECT
 	B.Name AS BrandName,
 	COUNT(P.Id) AS NumberOfPhones
@@ -99,7 +109,7 @@ FROM Brands B
 JOIN Phones P ON B.Id = P.BrandID
 GROUP BY B.Name
 
---10
+--11
 SELECT
 	B.Name AS BrandName,
     B.Id AS BrandId
@@ -107,7 +117,7 @@ FROM Brands B
 JOIN Laptops L ON B.Id = L.BrandID
 JOIN Phones P ON B.Id = P.BrandID
 
---11
+--12
 SELECT
 	P.Id AS PhoneId,
 	P.Name AS PhoneName,
@@ -120,7 +130,7 @@ FROM Brands B
 FULL JOIN Laptops L ON B.Id = L.BrandID
 FULL JOIN Phones P ON B.Id = P.BrandID
 
---12
+--13
 SELECT
 	P.Id AS PhoneId,
 	P.Name AS PhoneName,
