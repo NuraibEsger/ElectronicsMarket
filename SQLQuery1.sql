@@ -33,7 +33,6 @@ VALUES('SAMSUNG'),
 ('DELL'),
 ('POCO')
 
---1
 INSERT INTO Laptops
 VALUES('MACBOOK AIR', 3500, 2),
 ('MACBOOK PRO', 5000, 2),
@@ -44,7 +43,6 @@ VALUES('MACBOOK AIR', 3500, 2),
 ('TUF GAMING F15', 6000, 3),
 ('PAVILION 14', 1500, 5)
 
---2
 INSERT INTO Phones
 VALUES('Iphone 13', 1400, 2),
 ('Iphone 15', 3000, 2),
@@ -69,30 +67,22 @@ SELECT
 	P.Price AS Price
 FROM Brands B
 JOIN Phones P ON B.Id = P.BrandID
-
 --5
-SELECT 
-	B.Name AS BrandName,
-	P.Name AS PhoneName 
-FROM Brands B
-JOIN Phones P ON B.Id = P.BrandID
-
---6
 SELECT 
 	B.Name AS BrandName,
 	L.Name AS LaptopName 
 FROM Brands B
 JOIN Laptops L ON B.Id = L.BrandID
 
---7
+--6
 SELECT * FROM Laptops
 WHERE Laptops.Price >= 2000 AND Laptops.Price < 5000 OR Laptops.Price > 5000
 
---8
+--7
 SELECT * FROM Phones
 WHERE Phones.Price >= 1000 AND Phones.Price < 1500 OR Phones.Price > 1500
 
---9
+--8
 SELECT
     B.Name AS BrandName,
     COUNT(L.Id) AS NumberOfLaptops
@@ -101,7 +91,7 @@ FROM
 JOIN Laptops L ON B.Id = L.BrandID
 GROUP BY B.Name;
 
---10
+--9
 SELECT
 	B.Name AS BrandName,
 	COUNT(P.Id) AS NumberOfPhones
@@ -109,7 +99,7 @@ FROM Brands B
 JOIN Phones P ON B.Id = P.BrandID
 GROUP BY B.Name
 
---11
+--10
 SELECT
 	B.Name AS BrandName,
     B.Id AS BrandId
@@ -117,7 +107,7 @@ FROM Brands B
 JOIN Laptops L ON B.Id = L.BrandID
 JOIN Phones P ON B.Id = P.BrandID
 
---12
+--11
 SELECT
 	P.Id AS PhoneId,
 	P.Name AS PhoneName,
@@ -130,7 +120,7 @@ FROM Brands B
 FULL JOIN Laptops L ON B.Id = L.BrandID
 FULL JOIN Phones P ON B.Id = P.BrandID
 
---13
+--12
 SELECT
 	P.Id AS PhoneId,
 	P.Name AS PhoneName,
@@ -143,4 +133,25 @@ FROM Brands B
 FULL JOIN Laptops L ON B.Id = L.BrandID
 FULL JOIN Phones P ON B.Id = P.BrandID
 
+--13
+SELECT
+	P.Id AS PhoneId,
+	P.Name AS PhoneName,
+	P.Price AS PhonePrice,
+	L.Id AS LaptopId,
+	L.Name AS LaptoptName,
+	L.Price AS LaptopPrice,
+    B.Name AS BrandName
+FROM Brands B
+FULL JOIN Laptops L ON B.Id = L.BrandID
+FULL JOIN Phones P ON B.Id = P.BrandID
+WHERE P.Price>1000 AND L.Price > 1000
 
+--14
+SELECT 
+	B.Name AS BrandName,
+	SUM(P.Price) AS TotalPrice,
+	COUNT(P.Id) AS ProductCount
+FROM Brands B
+JOIN Phones P ON B.Id = P.BrandID
+GROUP BY B.Name
